@@ -2,10 +2,25 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ApiGatewayApplication",
+            "request": "launch",
+            "mainClass": "com.m4gpie.apigateway.ApiGatewayApplication",
+            "projectName": "api-gateway"
+        },
+        {
+            "type": "java",
+            "name": "ApiGatewayServiceApplication",
+            "request": "launch",
+            "mainClass": "com.m4gpie.apigateway.ApiGatewayServiceApplication",
+            "projectName": "api-gateway"
+        },
+        {
+            "type": "java",
             "name": "DiscoveryServerApplication",
             "request": "launch",
             "mainClass": "com.m4gpie.discoveryserver.DiscoveryServerApplication",
-            "projectName": "discovery-server"
+            "projectName": "discovery-server",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=33155 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=discovery-server"
         },
         {
             "type": "java",
@@ -37,6 +52,17 @@
             "projectName": "product-service",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-Main<api-gateway>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.m4gpie.Main",
+            "projectName": "api-gateway",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=41805 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=api-gateway"
         }
     ]
 }
