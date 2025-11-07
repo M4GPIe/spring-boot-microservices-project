@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.m4gpie.model.User;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +35,13 @@ public class JWTService {
     }
 
     public Boolean isValid(String token) {
-        return !isTokenExpired(token);
+
+        try {
+            return !isTokenExpired(token);
+        } catch (ExpiredJwtException e) {
+            return false;
+        }
+
     }
 
     private boolean isTokenExpired(String token) {
