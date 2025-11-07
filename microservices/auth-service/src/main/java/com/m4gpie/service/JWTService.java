@@ -35,13 +35,15 @@ public class JWTService {
     }
 
     public Boolean isValid(String token) {
-
         try {
             return !isTokenExpired(token);
         } catch (ExpiredJwtException e) {
+            log.warn("Token expirado: " + token);
+            return false;
+        } catch (Exception e) {
+            log.error("Error al validar el token JWT", e);
             return false;
         }
-
     }
 
     private boolean isTokenExpired(String token) {
@@ -58,11 +60,17 @@ public class JWTService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser()
-                .verifyWith(secretKey)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+        try {
+            return Jwts.parser()
+                    .verifyWith(secretKey)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+        } catch (ExpiredJwtException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException("Error al validar el token JWT", e);
+        }
     }
 
     public String generateToken(User user) {
